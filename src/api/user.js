@@ -6,27 +6,24 @@ export const login = ({ username, password, code }) => {
     password,
     code
   }
-  console.log(data)
+
   return axios.request({
-    url: 'login',
+    url: 'passport/login',
     data,
     method: 'post'
   })
 }
 
-export const getUserInfo = (token) => {
+export const getUserInfo = () => {
   return axios.request({
-    url: 'get_info',
-    params: {
-      token
-    },
+    url: 'passport',
     method: 'get'
   })
 }
 
-export const logout = (token) => {
+export const logout = () => {
   return axios.request({
-    url: 'logout',
+    url: 'passport/logout',
     method: 'post'
   })
 }

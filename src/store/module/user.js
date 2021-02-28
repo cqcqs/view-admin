@@ -1,11 +1,14 @@
 import { login, logout, getUserInfo } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
+import avatar from '@/assets/images/avatar.jpeg'
 
 export default {
   state: {
     userId: '',
     userName: '',
-    avatarImgPath: '',
+    avatar: '',
+    realName: '',
+    email: '',
     access: '',
     token: getToken(),
     hasGetInfo: false
@@ -15,13 +18,19 @@ export default {
   },
   mutations: {
     setAvatar (state, avatarPath) {
-      state.avatarImgPath = avatarPath
+      state.avatar = avatarPath || avatar
     },
     setUserId (state, id) {
       state.userId = id
     },
     setUserName (state, name) {
       state.userName = name
+    },
+    setRealName (state, realName) {
+      state.realName = realName
+    },
+    setEmail (state, email) {
+      state.email = email
     },
     setAccess (state, access) {
       state.access = access
@@ -45,7 +54,7 @@ export default {
           code
         }).then(res => {
           const data = res.data
-          commit('setToken', data.token)
+          commit('setToken', `${data.token_type} ${data.access_token}`)
           resolve()
         }).catch(err => {
           reject(err)
@@ -55,7 +64,7 @@ export default {
     // 退出登录
     handleLogout ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        logout().then(() => {
           commit('setToken', '')
           commit('setAccess', [])
           resolve()
@@ -75,8 +84,10 @@ export default {
           getUserInfo(state.token).then(res => {
             const data = res.data
             commit('setAvatar', data.avatar)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
+            commit('setUserName', data.username)
+            commit('setRealName', data.real_name)
+            commit('setEmail', data.email)
+            commit('setUserId', data.id)
             commit('setAccess', data.access)
             commit('setHasGetInfo', true)
             resolve(data)

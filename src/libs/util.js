@@ -3,7 +3,7 @@ import config from '@/config/index'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
 const { title, tokenExpires, useI18n } = config
 
-export const TOKEN_KEY = 'token'
+export const TOKEN_KEY = 'access_token'
 
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, { expires: tokenExpires || 1 })

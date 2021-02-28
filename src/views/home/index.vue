@@ -1,12 +1,12 @@
 <template>
   <div>
-    这事主页
+    <h1>View Admin</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'index'
+  name: 'home'
 }
 </script>
 

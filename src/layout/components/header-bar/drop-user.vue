@@ -2,8 +2,9 @@
   <Dropdown @on-click="handleClick">
     <a href="javascript:void(0)">
       <Badge dot>
-        <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
+        <Avatar :src="$store.state.user.avatar" />
       </Badge>
+      <span style="color: #666;"> {{ $store.state.user.realName }}</span>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
     </a>
     <DropdownMenu slot="list">
@@ -31,10 +32,16 @@ export default {
       }
     },
     logout () {
-      this.handleLogout().then(res => {
-        this.$router.push({
-          name: 'login'
-        })
+      this.$Modal.confirm({
+        title: '退出登录',
+        content: '您确定要注销登录吗？',
+        onOk: () => {
+          this.handleLogout().then(res => {
+            this.$router.push({
+              name: 'login'
+            })
+          })
+        }
       })
     }
   }
